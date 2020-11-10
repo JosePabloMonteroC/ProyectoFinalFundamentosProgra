@@ -1,0 +1,70 @@
+/**
+ * @file
+ * @brief
+ * @details
+ *
+ * @author Desarrolladores del proyecto
+ *   Jose Pablo Montero C
+ * @date Fecha de creaciòn
+ *   4 de Noviembre 2020
+ *
+ * @author Desarrollador que realizo la ultima modificacion
+ *   Jose Pablo Montero Cantu
+ * @date Fecha de ultima modificacion
+ *   4 de Noviembre 2020
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/**@brief Prototipos de funcion*/
+void mostrarInstrucciones(char [], char []);
+void limpiarEntradaDatos(void); 
+
+/**
+ * @fn  Funcion del programa Principal.
+ * @return Entero: Si muestra un valor 0 nuestro programa, se esta ejecutando correctamente.
+ */
+
+
+int main(void)
+{
+  mostrarInstrucciones("Jose Pablo Montero","Descripcion del programa");
+  limpiarEntradaDatos();
+  
+  return 0;
+}
+
+
+/**
+ *@fn Procedimiento Muestra las instrucciones del programa.
+ */
+void mostrarInstrucciones(char autores[], char instrucciones[])
+{
+  printf("Aplicacion desarrollada por:\n");
+  printf("\t%s\n\n", autores);
+  printf("Descripcion del programa:\n");
+  printf("\t%s\n\n", instrucciones);
+  printf("Presiona la tecla enter para continuar:\n");
+  getchar();
+  
+  system("clear");
+
+  
+  return;
+  
+}
+
+/**
+ *@fn Procedimiento que limpia el bufer de entrada.
+ */
+void limpiarEntradaDatos(void)
+{
+  int limpiar;
+  
+  while((limpiar = getchar()) != '\n' && limpiar !=EOF) {}
+
+  return;
+
+} 
+
