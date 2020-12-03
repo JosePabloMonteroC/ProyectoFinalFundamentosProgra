@@ -25,6 +25,7 @@ void mostrarMenuCatalogos(void);
 void mostrarMenuRegistroClientes(void);
 void agendarCita(void);
 void mostrarMenuReportes(void);
+void mostrarPaquetesCatalogos(void);
 
 /**
  * @fn  Funcion del programa Principal.
@@ -34,7 +35,8 @@ void mostrarMenuReportes(void);
 
 int main(void)
 {
-  mostrarInstrucciones("Jose Pablo Montero, Thalia BRavo y Ricardo Lopez","Sistema de un autolavado.");
+  system("clear");
+  mostrarInstrucciones("Jose Pablo Montero, Thalia Bravo y Ricardo Lopez","Sistema de un autolavado.");
   mostrarMenuPrincipal();
   
   return 0;
@@ -152,7 +154,7 @@ void mostrarMenuCatalogos(void)
       printf("\t1) Paquetes para lavado de autos.\n");
       printf("\t2) Regresar al menu principal.\n\n");
 
-      printf("Selecciona una opcion del menu (1  -  5): ");
+      printf("Selecciona una opcion del menu (1  -  2): ");
       scanf(" %hd", &opcionMenu);
       limpiarEntradaDatos();
       
@@ -161,10 +163,11 @@ void mostrarMenuCatalogos(void)
   switch(opcionMenu)
     {
     case 1:
+      system("clear");
       printf("Acciones para mostrar paquetes de lavado de autos.\n\n");
        printf("Presiona la tecla \"enter\" para continuar.\n");
        getchar();
-       mostrarMenuCatalogos();
+       mostrarPaquetesCatalogos();
        
     break;
     
@@ -214,6 +217,140 @@ void agendarCita(void)
 void mostrarMenuReportes(void)
 {
   printf("Menu Reportes.\n\n");
+
+  return;
+}
+
+void mostrarPaquetesCatalogos(void)
+{
+  short int opcion, opcion2;
+  int precio;
+  char cajuela;
+  
+   do
+    {
+      system("clear");
+      printf("Paquetes para lavado de auto.\n\n");
+      printf("\t1) Espuma activa.\n\n");
+      printf("\t\t a.\tCosto $80.00.\n\n");
+      printf("\t\t b.\tDescripcion del paquete:Espuma activa, lavado, aspirado interior y secado.\n\n");
+
+      printf("\t2) Cera líquida.\n\n");
+      printf("\t\t a.\tCosto $90.00.\n\n");
+      printf("\t\t b.\tDescripcion del paquete: Espuma activa, lavado, aspirado interior, secado y super encerado.\n\n");
+
+      printf("\t3) Premium.\n\n");
+      printf("\t\t a.\tCosto $99.00.\n\n");
+      printf("\t\t b.\tDescripcion del paquete: Premium, lavado, aspirado interior, secado, super encerado y lavado de chasis.\n\n");
+
+      printf("\t4) Regresar.\n\n");
+
+
+      printf("Selecciona una opcion del menu (1  -  4): ");
+      scanf(" %hd", &opcion);
+      limpiarEntradaDatos();
+      
+    }while(opcion <1 || opcion > 4);
+
+   switch(opcion)
+     {
+     case 1:
+       precio = 80;
+       printf("\nEscogiste: Espuma activa, este paquete tiene un precio de: $%d\n\n",precio);
+       printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
+       printf("Escribe si (s) o no (n):");
+       scanf(" %c", &cajuela);
+       if(cajuela == 's')
+	 {
+	   precio = precio + 10;
+	   system("clear");
+	   printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	 }else if(cajuela == 'n')
+	  {
+	    system("clear");
+	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	  }
+       
+       break;
+
+      case 2:
+	precio = 90;
+	printf("\nEscogiste: Cera Líquida, este paquete tiene un precio de: $%d\n\n",precio);
+	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
+	printf("Escribe si (s) o no (n):");
+	scanf(" %c", &cajuela);
+	if(cajuela == 's')
+	  {
+	    precio = precio + 10;
+	    system("clear");
+	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	  }else if(cajuela == 'n')
+	  {
+	    system("clear");
+	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	  }
+       
+       break;
+
+      case 3:
+	precio = 99;
+	printf("\nEscogiste: Espuma activa, este paquete tiene un precio de: $%d\n\n",precio);
+	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
+	printf("Escribe si (s) o no (n):");
+	scanf(" %c", &cajuela);
+	if(cajuela == 's')
+	  {
+	    precio = precio + 10;
+	    system("clear");
+	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	  }else if(cajuela == 'n')
+	  {
+	    system("clear");
+	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	  }
+       
+       break;
+
+      case 4:
+	mostrarMenuCatalogos();
+	break;
+
+     default:
+       printf("\nOpcion invalida, Por favor intenta de nuevo. ");
+       mostrarPaquetesCatalogos();
+       break;
+     }
+
+    printf("Que deseas hacer?: \n\n");
+
+    do
+    {
+      printf("\t1) Agendar Cita.\n\n");
+      printf("\t2) Regresar.\n\n");
+
+
+      printf("Selecciona una opcion (1  -  2): ");
+      scanf(" %hd", &opcion2);
+      limpiarEntradaDatos();
+      
+    }while(opcion2 <1 || opcion2 > 2);
+
+   switch(opcion2)
+     {
+     case 1:
+       agendarCita();
+       break;
+
+     case 2:
+       mostrarPaquetesCatalogos();
+       break;
+
+     default:
+       printf("Por favor, ingresa una opcion valida: ");
+       mostrarPaquetesCatalogos();
+       break;
+       
+     }
 
   return;
 }
