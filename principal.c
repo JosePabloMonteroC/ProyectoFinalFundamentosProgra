@@ -32,7 +32,6 @@ void mostrarPaquetesCatalogos(void);
  * @return Entero: Si muestra un valor 0 nuestro programa, se esta ejecutando correctamente.
  */
 
-
 int main(void)
 {
   system("clear");
@@ -194,10 +193,35 @@ void mostrarMenuCatalogos(void)
 
 void mostrarMenuRegistroClientes(void)
 {
-  printf("Menu Registro Clientes.\n\n");
+  
+
+   short int opcionMenu;
+   
+  do
+    {
+      system("clear");
+      printf("Menu Registro Clientes.\n\n");
+      printf("\t1) Agregar un cliente.\n");
+      printf("\t2) Modificar datos de cliente.\n");
+      printf("\t3) Eliminar cliente.\n");
+      printf("\t4) Regresar al menu principal.\n\n");
+
+      printf("Selecciona una opcion del menu (1  -  4): ");
+      scanf(" %hd", &opcionMenu);
+      limpiarEntradaDatos();
+      
+    }while(opcionMenu <1 || opcionMenu > 4);
+
+  switch(opcionMenu)
+    {
+    case 1:
+     
+      break;
+    }
 
   return;
 }
+
 
 /**
  *@fn Procedimiento que muestra el menu para agendar una cita.
@@ -225,7 +249,7 @@ void mostrarPaquetesCatalogos(void)
 {
   short int opcion, opcion2;
   int precio;
-  char cajuela;
+  char cajuela, tipoAuto;
   
    do
     {
@@ -260,17 +284,57 @@ void mostrarPaquetesCatalogos(void)
        printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
        printf("Escribe si (s) o no (n):");
        scanf(" %c", &cajuela);
+       limpiarEntradaDatos();
        if(cajuela == 's')
 	 {
 	   precio = precio + 10;
 	   system("clear");
-	   printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	   printf("\nTu precio estimado es de: $%d\n\n", precio);
 	 }else if(cajuela == 'n')
-	  {
-	    system("clear");
-	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
-	  }
+	 {
+	   system("clear");
+	   printf("\nTu precio estimado es de: $%d\n\n", precio);
+	 }
+       printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
+       printf("Que tipo de vehiculo tienes?( a, b, c): ");
+       scanf(" %c", &tipoAuto);
+       limpiarEntradaDatos();
+       if(tipoAuto == 'a' || tipoAuto == 'b')
+	 {
+	   precio = precio +10;
+	   printf("\n\nTu total seria de: $%d", precio);
+	   
+	 }else if(tipoAuto == 'c')
+	 {
+	   printf("\n\nTu total es de: $%d", precio); 
+	 }
+       do
+	 {
+	   printf("\n\t1) Regresar.\n");
+	   printf("\t2) Menu Principal.\n\n");
+	   
+	   
+	   printf("Selecciona una opcion (1  -  2): ");
+	   scanf(" %hd", &opcion2);
+	   limpiarEntradaDatos();
+	   
+	 }while(opcion2 <1 || opcion2 > 2);
        
+       switch(opcion2)
+	 {
+	 case 1:
+	   mostrarPaquetesCatalogos();
+	   break;
+	   
+	 case 2:
+	   mostrarMenuPrincipal();
+	   break;
+	   
+	 default:
+	   printf("Por favor, ingresa una opcion valida: ");
+	   mostrarPaquetesCatalogos();
+	   break;
+	 }
        break;
 
       case 2:
@@ -279,17 +343,57 @@ void mostrarPaquetesCatalogos(void)
 	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
 	printf("Escribe si (s) o no (n):");
 	scanf(" %c", &cajuela);
+	limpiarEntradaDatos();
 	if(cajuela == 's')
 	  {
 	    precio = precio + 10;
 	    system("clear");
-	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	    printf("\nTu precio estimado es de: $%d\n\n", precio);
 	  }else if(cajuela == 'n')
 	  {
 	    system("clear");
-	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	    printf("\nTu precio estimado es de: $%d\n\n", precio);
 	  }
-       
+	printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
+	printf("Que tipo de vehiculo tienes?(a, b, c): ");
+	scanf(" %c", &tipoAuto);
+	limpiarEntradaDatos();
+	if(tipoAuto == 'a' || tipoAuto == 'b')
+	  {
+	    precio = precio +10;
+	    printf("\n\nTu total seria de: $%d", precio);
+	    
+	  }else if(tipoAuto == 'c')
+	  {
+	    printf("\n\nTu total es de: $%d", precio); 
+	  }
+	do
+	  {
+	    printf("\n\t1) Regresar.\n");
+	    printf("\t2) Menu Principal.\n\n");
+	    
+	    
+	    printf("Selecciona una opcion (1  -  2): ");
+	    scanf(" %hd", &opcion2);
+	    limpiarEntradaDatos();
+	    
+	  }while(opcion2 <1 || opcion2 > 2);
+	
+	switch(opcion2)
+	  {
+	  case 1:
+	    mostrarPaquetesCatalogos();
+	    break;
+	    
+	  case 2:
+	    mostrarMenuPrincipal();
+	    break;
+	    
+	  default:
+	    printf("Por favor, ingresa una opcion valida: ");
+	    mostrarPaquetesCatalogos();
+	    break;
+	  }
        break;
 
       case 3:
@@ -298,21 +402,64 @@ void mostrarPaquetesCatalogos(void)
 	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
 	printf("Escribe si (s) o no (n):");
 	scanf(" %c", &cajuela);
+	limpiarEntradaDatos();
 	if(cajuela == 's')
 	  {
 	    precio = precio + 10;
 	    system("clear");
-	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	    printf("\nTu precio estimado es de: $%d\n\n", precio);
 	  }else if(cajuela == 'n')
 	  {
 	    system("clear");
-	    printf("\n\nTu precio estimado es de: $%d\n\n", precio);
+	    printf("\nTu precio estimado es de: $%d\n\n", precio);
 	  }
-       
-       break;
+
+	printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
+	printf("Que tipo de vehiculo tienes?(a, b, c): ");
+	scanf(" %c", &tipoAuto);
+	limpiarEntradaDatos();
+	if(tipoAuto == 'a' || tipoAuto == 'b')
+	  {
+	    precio = precio +10;
+	    printf("\n\nTu total seria de: $%d", precio);
+	    
+	  }else if(tipoAuto == 'c')
+	  {
+	    printf("\n\nTu total es de: $%d", precio); 
+	  }
+	do
+	  {
+	    printf("\n\t1) Regresar.\n");
+	    printf("\t2) Menu Principal.\n\n");
+	    
+	    
+	    printf("Selecciona una opcion (1  -  2): ");
+	    scanf(" %hd", &opcion2);
+	    limpiarEntradaDatos();
+	    
+	  }while(opcion2 <1 || opcion2 > 2);
+	
+	switch(opcion2)
+	  {
+	  case 1:
+	    mostrarPaquetesCatalogos();
+	    break;
+	    
+	  case 2:
+	    mostrarMenuPrincipal();
+	    break;
+	    
+	  default:
+	    printf("Por favor, ingresa una opcion valida: ");
+	    mostrarPaquetesCatalogos();
+	    break;
+	    
+	  }
+	
+      	break;
 
       case 4:
-	mostrarMenuCatalogos();
+	mostrarMenuPrincipal();
 	break;
 
      default:
@@ -320,37 +467,6 @@ void mostrarPaquetesCatalogos(void)
        mostrarPaquetesCatalogos();
        break;
      }
-
-    printf("Que deseas hacer?: \n\n");
-
-    do
-    {
-      printf("\t1) Agendar Cita.\n\n");
-      printf("\t2) Regresar.\n\n");
-
-
-      printf("Selecciona una opcion (1  -  2): ");
-      scanf(" %hd", &opcion2);
-      limpiarEntradaDatos();
-      
-    }while(opcion2 <1 || opcion2 > 2);
-
-   switch(opcion2)
-     {
-     case 1:
-       agendarCita();
-       break;
-
-     case 2:
-       mostrarPaquetesCatalogos();
-       break;
-
-     default:
-       printf("Por favor, ingresa una opcion valida: ");
-       mostrarPaquetesCatalogos();
-       break;
-       
-     }
-
-  return;
+   
+   return;
 }
