@@ -16,10 +16,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "../Bibliotecas/funciones.h"
 
 /**@brief Prototipos de funcion*/
-void mostrarInstrucciones(char [], char []);
-void limpiarEntradaDatos(void);
 void mostrarMenuPrincipal(void);
 void mostrarMenuCatalogos(void);
 void mostrarMenuRegistroClientes(void);
@@ -35,47 +34,14 @@ int mostrarPaquetesCatalogos(void);
 int main(void)
 {
   system("clear");
-  mostrarInstrucciones("Jose Pablo Montero, Thalia Bravo y Ricardo Lopez","Sistema de un autolavado.");
+  mostrarInstrucciones("Jose Pablo, Thalia Bravo y Ricardo Lopez","Sistema de un autolavado.");
   mostrarMenuPrincipal();
   
   return 0;
 }
 
-
 /**
- *@fn Procedimiento Muestra las instrucciones del programa.
- */
-void mostrarInstrucciones(char autores[], char instrucciones[])
-{
-  printf("Aplicacion desarrollada por:\n");
-  printf("\t%s\n\n", autores);
-  printf("Descripcion del programa:\n");
-  printf("\t%s\n\n", instrucciones);
-  printf("Presiona la tecla enter para continuar:\n");
-  getchar();
-  
-  system("clear");
-
-  
-  return;
-  
-}
-
-/**
- *@fn Procedimiento que limpia el bufer de entrada.
- */
-void limpiarEntradaDatos(void)
-{
-  int limpiar;
-  
-  while((limpiar = getchar()) != '\n' && limpiar !=EOF) {}
-
-  return;
-
-}
-
-/**
- *@fn Procedimiento que muestra las opciones del menu princpial.
+ *@fn Procedimiento que muestra el menu principal.
  */
 
 void mostrarMenuPrincipal(void)
