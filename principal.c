@@ -11,7 +11,7 @@
  * @author Desarrollador que realizo la ultima modificacion
  *   Jose Pablo Montero Cantu
  * @date Fecha de ultima modificacion
- *   02 de Diciembre 2020
+ *   04 de Diciembre 2020
  */
 
 #include <stdio.h>
@@ -25,7 +25,7 @@ void mostrarMenuCatalogos(void);
 void mostrarMenuRegistroClientes(void);
 void agendarCita(void);
 void mostrarMenuReportes(void);
-void mostrarPaquetesCatalogos(void);
+int mostrarPaquetesCatalogos(void);
 
 /**
  * @fn  Funcion del programa Principal.
@@ -245,7 +245,7 @@ void mostrarMenuReportes(void)
   return;
 }
 
-void mostrarPaquetesCatalogos(void)
+int mostrarPaquetesCatalogos(void)
 {
   short int opcion, opcion2;
   int precio;
@@ -468,5 +468,5 @@ void mostrarPaquetesCatalogos(void)
        break;
      }
    
-   return;
+   return precio;
 }
