@@ -1,17 +1,18 @@
 /**
+ * COMPILA USANDO MAKE!!!!!!!1 NO VAYAS A USAR GCC!!!!!!!!!!
  * @file principal.
  * @brief Sistema para administrar un negocio de autolavado.
- * @details Programa uqe muestra las diferentes funciones de un autolavado.
+ * @details Programa que muestra las diferentes funciones de un autolavado.
  *
  * @author Desarrolladores del proyecto
- *   Jose Pablo Montero C, Thalia Bravo Pimentel, Ricardo Lopez.
- * @date Fecha de creaciòn
+ *   Jose Pablo Montero Cantú, Thalía Isabel Bravo Pimentel, Ricardo López Alvarez.
+ * @date Fecha de creación
  *   10 de Noviembre 2020
  *
  * @author Desarrollador que realizo la ultima modificacion
- *   Jose Pablo Montero Cantu
+ *   Jose Pablo Montero Cantú
  * @date Fecha de ultima modificacion
- *   04 de Diciembre 2020
+ *   05 de Diciembre 2020
  */
 
 #include <stdio.h>
@@ -53,7 +54,7 @@ void eliminarDatosCliente(Clientes agregarClientes[]);
 int main(void)
 {
   system("clear");
-  mostrarInstrucciones("Jose Pablo, Thalia Bravo y Ricardo Lopez","Sistema de un autolavado.");
+  mostrarInstrucciones("Jose Pablo Montero, Thalía Bravo y Ricardo López","Sistema de un autolavado.");
   mostrarMenuPrincipal();
   
   return 0;
