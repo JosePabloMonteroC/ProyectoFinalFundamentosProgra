@@ -18,6 +18,22 @@
 #include <stdlib.h>
 #include "../Bibliotecas/funciones.h"
 
+#define MAX 100
+#define MAX_CLIENTES 100
+
+/**
+ *@brief Estructuras.
+ */
+
+struct Datos
+{
+  char nombre[50], marca[50], modelo[50], color[15], placas [10], tipoAuto[15];
+  int totalServicio, numeroServicios;
+};
+
+typedef struct Datos Clientes;
+
+
 /**@brief Prototipos de funcion*/
 void mostrarMenuPrincipal(void);
 void mostrarMenuCatalogos(void);
@@ -25,6 +41,9 @@ void mostrarMenuRegistroClientes(void);
 void agendarCita(void);
 void mostrarMenuReportes(void);
 int mostrarPaquetesCatalogos(void);
+void leerDatosClientes(int *numClientes, Clientes agregarClientes[]);
+void desplegarDatosClientes(int numClientes, Clientes agregarClientes[]);
+void eliminarDatosCliente(Clientes agregarClientes[]);
 
 /**
  * @fn  Funcion del programa Principal.
@@ -159,9 +178,9 @@ void mostrarMenuCatalogos(void)
 
 void mostrarMenuRegistroClientes(void)
 {
-  
-
-   short int opcionMenu;
+  int numClientes = 0;
+  Clientes agregarClientes[MAX_CLIENTES];
+  short int opcionMenu, opcion2;
    
   do
     {
@@ -181,13 +200,147 @@ void mostrarMenuRegistroClientes(void)
   switch(opcionMenu)
     {
     case 1:
-     
+      leerDatosClientes(&numClientes, agregarClientes);
+      system("clear");
+      desplegarDatosClientes(numClientes, agregarClientes);
+
+      do
+	{
+	  printf("\t1) Regresar.\n");
+	  printf("\t2) Menu Principal.\n\n");
+
+	  printf("Selecciona una opcion (1 - 2): ");
+	  scanf(" %hd", &opcion2);
+	  limpiarEntradaDatos();
+
+	}while(opcion2 <1 || opcion2 >2);
+      
+      switch(opcion2)
+	{
+	case 1:
+	  mostrarMenuRegistroClientes();
+	  break;
+
+	case 2:
+	  mostrarMenuPrincipal();
+	  break;
+	}
+	     
+	 
+      
+      break;
+      
+    case 2:
+      
+      break;
+      
+    case 3:
+      /**
+       system("clear");
+       desplegarDatosClientes(numClientes, agregarClientes);
+       eliminarDatosCliente(agregarClientes);
+      */
+      break;
+      
+    case 4:
+      mostrarMenuPrincipal();
       break;
     }
 
   return;
 }
 
+/**
+ *@fn Funcion que pide los datos al cliente.
+ *@param Numero de clientes
+*/
+
+void leerDatosClientes(int *numClientes, Clientes agregarClientes[])
+{
+  int i;
+  printf("Cuantos clientes quieres registrar?: ");
+  fflush(stdin);
+  scanf(" %d", numClientes);
+
+  for(i = 0; i <*numClientes; i++)
+    {
+      printf("\nDame los datos del cliente #%d:\n", i+1);
+      printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
+      scanf(" %[^\n]", agregarClientes[i].nombre);
+      printf("\tIngresa la marca del vehiculo: ");
+      fflush(stdin);
+      scanf(" %[^\n]", agregarClientes[i].marca);
+      printf("\tIngresa el modelo del vehiculo: ");
+      fflush(stdin);
+      scanf(" %[^\n]", agregarClientes[i].modelo);
+      printf("\tIngresa el color del vehiculo: ");
+      fflush(stdin);
+      scanf(" %[^\n]", agregarClientes[i].color);
+      printf("\tIngresa las placas del vehiculo: ");
+      fflush(stdin);
+      scanf(" %[^\n]", agregarClientes[i].placas);
+      printf("\tIngresa el tipo de vehiculo(camioneta, pick-up o auto): ");
+      fflush(stdin);
+      scanf(" %[^\n]", agregarClientes[i].tipoAuto);
+      printf("\tIngresa el precio total del servicio cotizado: ");
+      fflush(stdin);
+      scanf(" %d", &agregarClientes[i].totalServicio);
+      printf("\tIngresa el numero de servicios que lleva el cliente: ");
+      fflush(stdin);
+      scanf(" %d", &agregarClientes[i].numeroServicios);
+    }
+
+  return;
+  
+}
+
+
+/**
+ *@fn Funcion para imprimir los clientes agregados.
+ */
+
+void desplegarDatosClientes(int numClientes, Clientes agregarClientes[])
+{
+  int i;
+  printf("\n\n Datos de los clientes:\n\n");
+  
+  for(i = 0; i < numClientes; i++)
+    {
+      printf("Nombre del cliente #%d:\t%s\nMarca del auto:\t\t%s\nModelo del vehiculo:\t%s\nColor del vehiculo:\t%s\nPlacas del vehiculo:\t%s\nTipo de Auto:\t\t%s\nTotal del Servicio:\t%d\nNumero de Servicios:\t%d\n",i+1, agregarClientes[i].nombre, agregarClientes[i].marca, agregarClientes[i].modelo, agregarClientes[i].color, agregarClientes[i].placas, agregarClientes[i].tipoAuto, agregarClientes[i].totalServicio, agregarClientes[i].numeroServicios);
+      printf("\n\n");
+    }
+  printf("\n");
+
+  return;
+}
+
+/**
+ *@fn Funcion que elimina los datos del cliente.
+ *@param Numero de cliente.
+ */
+
+/**void eliminarDatosCliente(Clientes agregarClientes[])
+{
+  int numCliente;
+  char vacio[1] = [' '];
+  
+  printf("Ingresa el numero de cliente que quieres borrar: ");
+  fflush(stdin);
+  scanf(" %d", &numCliente);
+
+  agregarClientes[numCliente].nombre = vacio;
+  agregarClientes[numCliente].marca = vacio;
+  agregarClientes[numCliente].modelo = vacio;
+  agregarClientes[numCliente].color = vacio;
+  agregarClientes[numCliente].placas = vacio;
+  agregarClientes[numCliente].tipoAuto = vacio;
+  agregarClientes[numCliente].totalServicio = 0 ;
+  agregarClientes[numCliente].numeroServicios = 0;
+  
+  return;
+  
+}
+*/
 
 /**
  *@fn Procedimiento que muestra el menu para agendar una cita.
