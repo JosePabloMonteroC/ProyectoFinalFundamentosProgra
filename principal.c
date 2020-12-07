@@ -1,6 +1,5 @@
 /**
- * COMPILA USANDO MAKE!!!!!!!1 NO VAYAS A USAR GCC!!!!!!!!!!
- * @file principal.
+ * @file principal.c
  * @brief Sistema para administrar un negocio de autolavado.
  * @details Programa que muestra las diferentes funciones de un autolavado.
  *
@@ -12,39 +11,41 @@
  * @author Desarrollador que realizo la ultima modificacion
  *   Jose Pablo Montero Cantú
  * @date Fecha de ultima modificacion
- *   05 de Diciembre 2020
+ *   07 de Diciembre 2020
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../Bibliotecas/funciones.h"
-
-#define MAX 100
-#define MAX_CLIENTES 100
 
 /**
  *@brief Estructuras.
  */
-
-struct Datos
-{
-  char nombre[50], marca[50], modelo[50], color[15], placas [10], tipoAuto[15];
-  int totalServicio, numeroServicios;
-};
-
-typedef struct Datos Clientes;
+ struct Datos
+ {
+ 	char nombre[50], marca[50], modelo[50], color[15], placas[10];
+	int ID, tipoAuto, numeroServicios;
+ };
+ 
+ struct Agendar
+ {
+   int dia, hora, paquete, cajuela, total;
+ };
 
 
 /**@brief Prototipos de funcion*/
-void mostrarMenuPrincipal(void);
-void mostrarMenuCatalogos(void);
+void mostrarPrincipal(void);
+void mostrarCatalogo(void);
 void mostrarMenuRegistroClientes(void);
-void agendarCita(void);
 void mostrarMenuReportes(void);
-int mostrarPaquetesCatalogos(void);
-void leerDatosClientes(int *numClientes, Clientes agregarClientes[]);
-void desplegarDatosClientes(int numClientes, Clientes agregarClientes[]);
-void eliminarDatosCliente(Clientes agregarClientes[]);
+void registrarClientes(int numClientes, struct Datos* Clientes);
+void mostrarCliente(int numClientes, struct Datos* Clientes);
+void editarCliente(int numClientes, struct Datos* Clientes);
+void eliminarCliente(int numClientes, struct Datos* Clientes);
+void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Datos* Clientes, int miercoles[1], int hmiercoles[5], int jueves[1], int hjueves[5], int viernes[1], int hviernes[5], int sabado[1], int hsabado[5], int domingo[1], int hdomingo[5]);
+void mostrarGanancias(int  numCita, struct Agendar* Cita);
+void mostrarCitas(int numCita, struct Agendar* Cita, int hmiercoles[5], int hjueves[5], int hviernes[5], int hsabado[5], int hdomingo[5];);
 
 /**
  * @fn  Funcion del programa Principal.
@@ -53,9 +54,131 @@ void eliminarDatosCliente(Clientes agregarClientes[]);
 
 int main(void)
 {
+  struct Datos Clientes[100];
+  struct Agendar Cita[6];
+  int miercoles[1], jueves[1], viernes[1], sabado[1], domingo[1];
+  int hmiercoles[5], hjueves[5], hviernes[5], hsabado[5], hdomingo[5];
+  int opcionMenu, opcionClientes, opcionReportes, opcionGeneral = 1, numClientes = 0, numCita = 0, opcionCita;
+  
   system("clear");
-  mostrarInstrucciones("Jose Pablo Montero, Thalía Bravo y Ricardo López","Sistema de un autolavado.");
-  mostrarMenuPrincipal();
+  mostrarInstrucciones("Jose Pablo Montero, Thalía Bravo y Ricardo López","Sistema del autolavado 'SuperWash'.");
+  
+  printf ("\n\n\t\t\t---->Autolavado 'SuperWash'<----\n\n");
+  printf ("\tFundadores: José Pablo Montero, Ricardo López, Thalía Bravo\n");
+  printf ("\t Abierto de Miércoles a Domingo, de 10:00 hrs a 15:00 hrs\n\n");
+  getchar();
+  
+  do 
+    {
+      mostrarPrincipal();
+      printf ("Por favor seleccione la opción del menú que requiera: ");
+      scanf (" %d", &opcionMenu);
+      
+      switch (opcionMenu)
+	{
+	case 1:
+	  mostrarCatalogo();
+	  getchar();
+	  break;
+	  
+	case 2:
+	  mostrarMenuRegistroClientes();
+	  printf ("Seleccione una opción: ");
+	  scanf (" %d", &opcionClientes);
+	  switch (opcionClientes)
+	    {
+	    case 1:
+	      registrarClientes(numClientes, Clientes);
+	      numClientes = numClientes + 1;
+	      break;
+	      
+	    case 2:
+	      mostrarCliente(numClientes, Clientes);
+	      break;
+	      
+	    case 3:
+	      editarCliente(numClientes, Clientes);
+	      break;
+	      
+	    case 4:
+	      eliminarCliente(numClientes, Clientes);
+	      break;
+	      
+	    case 5:
+	      break;
+	      
+	    default:
+	      printf ("No es una opción válida, intenta de nuevo\n");
+	      break;
+	    }
+	  break;
+	  
+	case 3:
+	  system("clear");
+	  printf ("El cliente está registrado? ([1]Si [2]No [3]Regresar al menú principal): ");
+	  scanf (" %d", &opcionCita);
+	  switch (opcionCita)
+	    {
+	    case 1:
+	      agendarCitas(numCita, numClientes, Cita, Clientes, miercoles, hmiercoles, jueves, hjueves, viernes, hviernes, sabado, hsabado, domingo, hdomingo);
+	      numCita = numCita + 1;
+	      getchar();
+	      break;
+	      
+	    case 2:
+	      registrarClientes(numClientes, Clientes);
+	      numClientes = numClientes + 1;
+	      getchar();
+	      break;
+	      
+	    case 3:
+	      break;
+	      
+	    default:
+	      printf ("Opción no válida\n");
+	      break;
+	    }
+	  break;
+	  
+	case 4:
+	  mostrarMenuReportes();
+	  printf ("Seleccione una opción: ");
+	  scanf (" %d", &opcionReportes);
+	  switch (opcionReportes)
+	    {
+	    case 1:
+	      mostrarGanancias(numCita, Cita);
+	      break;
+	      
+	    case 2:
+	      mostrarCitas(numCita, Cita, hmiercoles, hjueves, hviernes, hsabado, hdomingo);
+	      break;
+	      
+	    case 3:
+	      //mostrarProgramaLealtad();
+	      break;
+	      
+	    case 4:
+	      break;
+	      
+	    default:
+	      printf ("No es una opción válida, intenta de nuevo\n");
+	      break;
+	    }
+	  break;	
+	  
+	case 5:
+	  opcionGeneral = 0;
+	  break;
+	  
+	default:
+	  printf ("No es una opción válida, intenta de nuevo\n");
+	  break;
+	  
+	}
+    } while (opcionGeneral != 0);
+  
+  printf ("¡Gracias por venir!\n");
   
   return 0;
 }
@@ -63,530 +186,976 @@ int main(void)
 /**
  *@fn Procedimiento que muestra el menu principal.
  */
-
-void mostrarMenuPrincipal(void)
+void mostrarPrincipal(void)
 {
-  short int opcionMenu;
- 
- 
-  do
-    {
-      system("clear");
-      printf("Menu Principal.\n\n");
-      printf("\t1) Catalogos.\n");
-      printf("\t2) Registro clientes.\n");
-      printf("\t3) Agendar cita.\n");
-      printf("\t4) Reportes.\n");
-      printf("\t5) Salir.\n\n");
-      
-      
-      printf("Selecciona una opcion del menu (1  -  5): ");
-      scanf(" %hd", &opcionMenu);
-      limpiarEntradaDatos();
-    }
-  while(opcionMenu < 1 || opcionMenu > 5);
-
-  switch(opcionMenu)
-    {
-      
-    case 1:
-       mostrarMenuCatalogos();
-    break;
-    
-    case 2:
-       mostrarMenuRegistroClientes();
-    break;
-    
-    case 3:
-      agendarCita();  
-    break;
-    
-    case 4:
-      mostrarMenuReportes();  
-    break;
-    
-    case 5:
-      printf("\nMuchas gracias por utilizar el sistema, que tenga buen dia.\n\n"); 
-     break;
-     
-    default:
-       printf("\nOpcion invalida o no disponible por el momento.\n\n");
-       printf("Presiona la tecla \"enter\" para continuar.\n");
-       getchar();
-       mostrarMenuPrincipal();
-    break;
-      
-    }
-  
-  return;
-  
-}
-
-/**
- *@fn Procedimiento que muestra el menu catalogos.
- */
-
-void mostrarMenuCatalogos(void)
-{
-  short int opcionMenu;
-  
-  
-
-  do
-    {
-      system("clear");
-      printf("Menu catalogos.\n\n");
-      printf("\t1) Paquetes para lavado de autos.\n");
-      printf("\t2) Regresar al menu principal.\n\n");
-
-      printf("Selecciona una opcion del menu (1  -  2): ");
-      scanf(" %hd", &opcionMenu);
-      limpiarEntradaDatos();
-      
-    }while(opcionMenu <1 || opcionMenu > 2);
-
-  switch(opcionMenu)
-    {
-    case 1:
-      system("clear");
-      printf("Acciones para mostrar paquetes de lavado de autos.\n\n");
-       printf("Presiona la tecla \"enter\" para continuar.\n");
-       getchar();
-       mostrarPaquetesCatalogos();
-       
-    break;
-    
-    case 2:
-      mostrarMenuPrincipal();  
-    break;
-    
-    default:
-      printf("\nOpcion invalida o no disponible por el momento.\n\n");
-       printf("Presiona la tecla \"enter\" para continuar.\n");
-       getchar();
-       mostrarMenuCatalogos();
-    break;
-      
-    }
+  system("clear");
+  printf ("Menú principal\n\n");
+  printf ("\t[1] Mostrar Catálogo\n\n\t\t[A] Paquetes para lavado de autos\n\t\t[B] Regresar al menú principal\n\n\n");
+  printf ("\t[2] Registro de Clientes\n\n\t\t[A] Agregar cliente\n\t\t[B] Mostrar Cliente\n\t\t[C] Modificar datos de un cliente\n\t\t[D] Eliminar cliente\n\t\t[E] Regresar al menú principal\n\n\n");
+  printf ("\t[3] Agendar Cita\n\n\t\t[A] Agendar una cita\n\t\t[B] Regresar al menú principal\n\n\n");
+  printf ("\t[4] Reportes\n\n\t\t[A] Ganancias\n\t\t[B] Citas\n\t\t[C] Programa de lealtad\n\t\t[D] Regresar al menú principal\n\n\n");
+  printf ("\t[5] Salir\n\n");
   
   return;
 }
 
+/**
+ *@fn Procedimiento que muestra el catálogo.
+ */
+void mostrarCatalogo(void)
+{
+  
+  system("clear");
+  printf ("Catálogo\n\n");
+  printf ("\t[1] Espuma activa\n\n\t\t[A] Costo: $80.00\n\t\t[B] Descripción del paquete: Espuma activa, lavado, aspirado interior y secado.\n\n");
+  printf ("\t[2] Cera líquida\n\n\t\t[A] Costo: $90.00\n\t\t[B] Descripción del paquete: Espuma activa, lavado, aspirado interior, secado y super encerado.\n\n");
+  printf ("\t[3] Premium\n\n\t\t[A] Costo: $99.00\n\t\t[B] Descripción del paquete: Espuma activa, lavado, aspirado interior, secado, super encerado y lavado de chasis.\n\n\n");
+  printf ("\tNOTAS IMPORTANTES:\n\n\t\t[a] Aspirar la cajuela tiene un costo extra de $10.00.\n\t\t[b] Camionetas o pick-ups tienen un costo extra de $10.00.\n\n");
+  printf ("\tPRESIONA 'ENTER' PARA CONTINUAR.\n");
+  getchar();
+    
+  return;
+}
 
 /**
- *@fn Procedimiento que muestra el menu registro clientes.
+ *@fn Procedimiento que muestra el registro de clientes.
  */
-
 void mostrarMenuRegistroClientes(void)
 {
-  int numClientes = 0;
-  Clientes agregarClientes[MAX_CLIENTES];
-  short int opcionMenu, opcion2;
-   
-  do
-    {
-      system("clear");
-      printf("Menu Registro Clientes.\n\n");
-      printf("\t1) Agregar un cliente.\n");
-      printf("\t2) Modificar datos de cliente.\n");
-      printf("\t3) Eliminar cliente.\n");
-      printf("\t4) Regresar al menu principal.\n\n");
-
-      printf("Selecciona una opcion del menu (1  -  4): ");
-      scanf(" %hd", &opcionMenu);
-      limpiarEntradaDatos();
-      
-    }while(opcionMenu <1 || opcionMenu > 4);
-
-  switch(opcionMenu)
-    {
-    case 1:
-      leerDatosClientes(&numClientes, agregarClientes);
-      system("clear");
-      desplegarDatosClientes(numClientes, agregarClientes);
-
-      do
-	{
-	  printf("\t1) Regresar.\n");
-	  printf("\t2) Menu Principal.\n\n");
-
-	  printf("Selecciona una opcion (1 - 2): ");
-	  scanf(" %hd", &opcion2);
-	  limpiarEntradaDatos();
-
-	}while(opcion2 <1 || opcion2 >2);
-      
-      switch(opcion2)
-	{
-	case 1:
-	  mostrarMenuRegistroClientes();
-	  break;
-
-	case 2:
-	  mostrarMenuPrincipal();
-	  break;
-	}
-	     
-	 
-      
-      break;
-      
-    case 2:
-      
-      break;
-      
-    case 3:
-      /**
-       system("clear");
-       desplegarDatosClientes(numClientes, agregarClientes);
-       eliminarDatosCliente(agregarClientes);
-      */
-      break;
-      
-    case 4:
-      mostrarMenuPrincipal();
-      break;
-    }
-
-  return;
-}
-
-/**
- *@fn Funcion que pide los datos al cliente.
- *@param Numero de clientes
-*/
-
-void leerDatosClientes(int *numClientes, Clientes agregarClientes[])
-{
-  int i;
-  printf("Cuantos clientes quieres registrar?: ");
-  fflush(stdin);
-  scanf(" %d", numClientes);
-
-  for(i = 0; i <*numClientes; i++)
-    {
-      printf("\nDame los datos del cliente #%d:\n", i+1);
-      printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
-      scanf(" %[^\n]", agregarClientes[i].nombre);
-      printf("\tIngresa la marca del vehiculo: ");
-      fflush(stdin);
-      scanf(" %[^\n]", agregarClientes[i].marca);
-      printf("\tIngresa el modelo del vehiculo: ");
-      fflush(stdin);
-      scanf(" %[^\n]", agregarClientes[i].modelo);
-      printf("\tIngresa el color del vehiculo: ");
-      fflush(stdin);
-      scanf(" %[^\n]", agregarClientes[i].color);
-      printf("\tIngresa las placas del vehiculo: ");
-      fflush(stdin);
-      scanf(" %[^\n]", agregarClientes[i].placas);
-      printf("\tIngresa el tipo de vehiculo(camioneta, pick-up o auto): ");
-      fflush(stdin);
-      scanf(" %[^\n]", agregarClientes[i].tipoAuto);
-      printf("\tIngresa el precio total del servicio cotizado: ");
-      fflush(stdin);
-      scanf(" %d", &agregarClientes[i].totalServicio);
-      printf("\tIngresa el numero de servicios que lleva el cliente: ");
-      fflush(stdin);
-      scanf(" %d", &agregarClientes[i].numeroServicios);
-    }
-
-  return;
+  system("clear");
+  printf ("Registro de clientes\n\n");
+  printf ("\t[1] Agregar cliente\n\n");
+  printf ("\t[2] Mostrar clientes\n\n");
+  printf ("\t[3] Editar cliente\n\n");
+  printf ("\t[4] Eliminar cliente\n\n");
+  printf ("\t[5] Regresar al menú principal\n\n");
   
+  return;
 }
 
-
 /**
- *@fn Funcion para imprimir los clientes agregados.
+ *@fn Procedimiento que muestra los reportes.
  */
-
-void desplegarDatosClientes(int numClientes, Clientes agregarClientes[])
-{
-  int i;
-  printf("\n\n Datos de los clientes:\n\n");
-  
-  for(i = 0; i < numClientes; i++)
-    {
-      printf("Nombre del cliente #%d:\t%s\nMarca del auto:\t\t%s\nModelo del vehiculo:\t%s\nColor del vehiculo:\t%s\nPlacas del vehiculo:\t%s\nTipo de Auto:\t\t%s\nTotal del Servicio:\t%d\nNumero de Servicios:\t%d\n",i+1, agregarClientes[i].nombre, agregarClientes[i].marca, agregarClientes[i].modelo, agregarClientes[i].color, agregarClientes[i].placas, agregarClientes[i].tipoAuto, agregarClientes[i].totalServicio, agregarClientes[i].numeroServicios);
-      printf("\n\n");
-    }
-  printf("\n");
-
-  return;
-}
-
-/**
- *@fn Funcion que elimina los datos del cliente.
- *@param Numero de cliente.
- */
-
-/**void eliminarDatosCliente(Clientes agregarClientes[])
-{
-  int numCliente;
-  char vacio[1] = [' '];
-  
-  printf("Ingresa el numero de cliente que quieres borrar: ");
-  fflush(stdin);
-  scanf(" %d", &numCliente);
-
-  agregarClientes[numCliente].nombre = vacio;
-  agregarClientes[numCliente].marca = vacio;
-  agregarClientes[numCliente].modelo = vacio;
-  agregarClientes[numCliente].color = vacio;
-  agregarClientes[numCliente].placas = vacio;
-  agregarClientes[numCliente].tipoAuto = vacio;
-  agregarClientes[numCliente].totalServicio = 0 ;
-  agregarClientes[numCliente].numeroServicios = 0;
-  
-  return;
-  
-}
-*/
-
-/**
- *@fn Procedimiento que muestra el menu para agendar una cita.
- */
-
-void agendarCita(void)
-{
-  printf("Agendar cita.\n\n");
-
-  return;
-}
-
-/**
- *@fn Procedimiento que muestra el menu reportes.
- */
-
 void mostrarMenuReportes(void)
 {
-  printf("Menu Reportes.\n\n");
-
+  system("clear");
+  printf ("Reportes\n\n");
+  printf ("\t[1] Ganancias\n\n");
+  printf ("\t[2] Citas\n\n");
+  printf ("\t[3] Programa de lealtad\n\n");
+  printf ("\t[4] Regresar al menú principal\n\n");
+  
   return;
 }
 
-int mostrarPaquetesCatalogos(void)
+/**
+ *@fn Función que registra a los clientes.
+ */
+void registrarClientes(int numClientes, struct Datos* Clientes)
 {
-  short int opcion, opcion2;
-  int precio;
-  char cajuela, tipoAuto;
+  system("clear");
+  printf("\nDame los datos del cliente #%d:\n", numClientes);
+  printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
+  scanf(" %s", Clientes[numClientes].nombre);
+  printf("\tIngresa la marca del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[numClientes].marca);
+  printf("\tIngresa el modelo del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[numClientes].modelo);
+  printf("\tIngresa el color del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[numClientes].color);
+  printf("\tIngresa las placas del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[numClientes].placas);
+  printf("\tIngresa el tipo de vehiculo. ([1] Camioneta o Pick-up [2]Auto): ");
+  fflush(stdin);
+  scanf(" %d", &Clientes[numClientes].tipoAuto);
+  printf("\tIngresa el número de servicios que lleva el cliente: ");
+  fflush(stdin);
+  scanf(" %d", &Clientes[numClientes].numeroServicios);
   
-   do
+  Clientes[numClientes].ID = numClientes;
+  getchar();
+  
+  return;
+  
+}
+
+/**
+ *@fn Función que muestra a los clientes.
+ */
+void mostrarCliente(int numClientes, struct Datos* Clientes)
+{
+  int x;
+  
+  system("clear");
+  printf("\nIngresa el ID del cliente:\n\n");
+  scanf (" %d", &x);
+  printf("\tNombre del cliente: %s\n", Clientes[x].nombre);
+  printf("\tMarca del vehiculo: %s\n", Clientes[x].marca);
+  printf("\tModelo del vehiculo: %s\n", Clientes[x].modelo);
+  printf("\tColor del vehiculo: %s\n", Clientes[x].color);
+  printf("\tPlacas del vehiculo: %s\n", Clientes[x].placas);
+  printf("\tTipo de vehiculo: %d\n", Clientes[x].tipoAuto);
+  printf("\tNúmero de servicios que lleva el cliente: %d\n\n", Clientes[x].numeroServicios);
+  
+  getchar();
+  
+  return;
+}
+
+/**
+ *@fn Función que edita a los clientes.
+ */
+void editarCliente(int numClientes, struct Datos* Clientes)
+{
+  int x;
+
+  system("clear");
+  printf("\nIngresa el ID del cliente que deseas modificar:\n\n");
+  scanf (" %d", &x);
+  
+  printf("\nDame los datos del cliente #%d:\n", x);
+  printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
+  scanf(" %s", Clientes[x].nombre);
+  printf("\tIngresa la marca del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[x].marca);
+  printf("\tIngresa el modelo del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[x].modelo);
+  printf("\tIngresa el color del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[x].color);
+  printf("\tIngresa las placas del vehiculo: ");
+  fflush(stdin);
+  scanf(" %s", Clientes[x].placas);
+  printf("\tIngresa el tipo de vehiculo. ([1] Camioneta [2] Pick-up [3]Auto): ");
+  fflush(stdin);
+  scanf(" %d", &Clientes[x].tipoAuto);
+  printf("\tIngresa el número de servicios que lleva el cliente: ");
+  fflush(stdin);
+  scanf(" %d", &Clientes[x].numeroServicios);
+  
+  getchar();
+  
+  return;
+}
+
+/**
+ *@fn Función que eliminar a los clientes.
+ */
+void eliminarCliente(int numClientes, struct Datos* Clientes)
+{
+  int x, i;
+
+  system("clear");
+  printf("\nIngresa el ID del cliente que deseas eliminar:\n\n");
+  scanf (" %d", &x);
+  
+  for (i = 0; i < numClientes; i ++)
     {
-      system("clear");
-      printf("Paquetes para lavado de auto.\n\n");
-      printf("\t1) Espuma activa.\n\n");
-      printf("\t\t a.\tCosto $80.00.\n\n");
-      printf("\t\t b.\tDescripcion del paquete:Espuma activa, lavado, aspirado interior y secado.\n\n");
+      if (x == Clientes[i].ID)
+	{
+	  int j;
+	  for (j = i +1; j < numClientes; j ++)
+	    {
+	      Clientes[j - 1] = Clientes[j];
+	      Clientes[j - 1].ID = Clientes[j - 1].ID - 1;
+	    }
+	  numClientes = numClientes - 1;
+	  printf ("Eliminado con éxito!\n");
+	  break;
+	}
+    }
+  
+  getchar();
+  
+  return;
+}
 
-      printf("\t2) Cera líquida.\n\n");
-      printf("\t\t a.\tCosto $90.00.\n\n");
-      printf("\t\t b.\tDescripcion del paquete: Espuma activa, lavado, aspirado interior, secado y super encerado.\n\n");
+/**
+ *@fn Función que eliminar a los clientes.
+ */
+void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Datos* Clientes, int miercoles[1], int hmiercoles[5], int jueves[1], int hjueves[5], int viernes[1], int hviernes[5], int sabado[1], int hsabado[5], int domingo[1], int hdomingo[5])
+{	
+  int x, i, existe = 0;
+  int contadorDias = 1, contadorHoras = 1;
 
-      printf("\t3) Premium.\n\n");
-      printf("\t\t a.\tCosto $99.00.\n\n");
-      printf("\t\t b.\tDescripcion del paquete: Premium, lavado, aspirado interior, secado, super encerado y lavado de chasis.\n\n");
-
-      printf("\t4) Regresar.\n\n");
-
-
-      printf("Selecciona una opcion del menu (1  -  4): ");
-      scanf(" %hd", &opcion);
-      limpiarEntradaDatos();
+  system("clear");
+  
+  while (existe != 6969)
+    {
+      printf ("Introduce el ID del cliente que desea agendar: ");
+      scanf (" %d", &x);
+      existe = x;
       
-    }while(opcion <1 || opcion > 4);
+      for (i = 0; i < numClientes; i ++)
+	{
+	  if (x == Clientes[i].ID)
+	    {
+	      printf ("Cliente encontrado!\n");
+	      existe = 6969;
+	      
+	      printf ("\t[1] Miércoles\n\t[2] Jueves\n\t[3] Viernes\n\t[4] Sábado\n\t[5] Domingo\n");
+	      
+	      do 
+		{
+		  printf ("Selecciona el día que deseas agendar: ");
+		  scanf (" %d", &Cita[numCita].dia);
+		  
+		  switch (Cita[numCita].dia)
+		    {
+		    case 1:
+		      if (miercoles[0] == 5)
+			{
+			  printf ("Día lleno\n");
+			  contadorDias = 1;
+			  getchar();
+			}
+		      else
+			{
+			  contadorDias = 0;
+			}
+		      break;
+		      
+		    case 2:
+		      if (jueves[0] == 5)
+			{
+			  printf ("Día lleno\n");
+			  contadorDias = 1;
+			  getchar(); 
+			}
+		      else
+			{
+			  contadorDias = 0;
+			}
+		      break;
+		      
+		    case 3:
+		      if (viernes[0] == 5)
+			{
+			  printf ("Día lleno\n");
+			  contadorDias = 1;
+			  getchar();
+			}
+		      else
+			{
+			  contadorDias = 0;
+			}
+		      break;
+		      
+		    case 4:
+		      if (sabado[0] == 5)
+			{
+			  printf ("Día lleno\n");
+			  contadorDias = 1;
+			  getchar();
+			}
+		      else
+			{
+			  contadorDias = 0;
+			}
+		      break;
+		      
+		    case 5:
+		      if (domingo[0] == 5)
+			{
+			  printf ("Día lleno\n");
+			  contadorDias = 1;
+			  getchar();
+			}
+		      else
+			{
+			  contadorDias = 0;
+			}
+		      break;
+		      
+		    default:
+		      break;		
+		    }
+		} while (contadorDias != 0);
+	      
+	      
+	      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+	      
+	      do 
+		{
+		  printf ("Selecciona la hora que deseas agendar: ");
+		  scanf (" %d", &Cita[numCita].hora);
+		  
+		  switch (Cita[numCita].dia)
+		    {
+		    case 1:
+		      if (hmiercoles[Cita[numCita].hora - 1] == 1)
+			{
+			  printf ("Horario ocupado\n");
+			  contadorHoras = 1;
+			  getchar();
+			}
+		      else
+			{
+			  mostrarCatalogo();
+			  printf ("Ingrese el paquete que desea agregar: ");
+			  scanf (" %d", &Cita[numCita].paquete);
+			  switch (Cita[numCita].paquete)
+			    {
+			    case 1:
+			      
+			      Cita[numCita].paquete = 80;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hmiercoles[Cita[numCita].hora - 1] = 1;
+			      miercoles[0] = miercoles[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 2:
+			      Cita[numCita].paquete = 90;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hmiercoles[Cita[numCita].hora - 1] = 1;
+			      miercoles[0] = miercoles[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 3:
+			      Cita[numCita].paquete = 99;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hmiercoles[Cita[numCita].hora - 1] = 1;
+			      miercoles[0] = miercoles[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    default:
+			      printf ("Opción no válida\n");
+			      break;
+			    }
+			  
+			}
+		      break;
+		      
+		    case 2:
+		      if (hjueves[Cita[numCita].hora - 1] == 1)
+			{
+			  printf ("Horario ocupado\n");
+			  contadorHoras = 1;
+			  getchar(); 
+			}
+		      else
+			{
+			  mostrarCatalogo();
+			  printf ("Ingrese el paquete que desea agregar: ");
+			  scanf (" %d", &Cita[numCita].paquete);
+			  switch (Cita[numCita].paquete)
+			    {
+			    case 1:
+			      Cita[numCita].paquete = 80;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hjueves[Cita[numCita].hora - 1] = 1;
+			      jueves[0] = jueves[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 2:
+			      Cita[numCita].paquete = 90;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hjueves[Cita[numCita].hora - 1] = 1;
+			      jueves[0] = jueves[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 3:
+			      Cita[numCita].paquete = 99;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hjueves[Cita[numCita].hora - 1] = 1;
+			      jueves[0] = jueves[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    default:
+			      printf ("Opción no válida\n");
+			      break;
+			    }
+			}
+		      break;
+		      
+		    case 3:
+		      if (hviernes[Cita[numCita].hora - 1] == 1)
+			{
+			  printf ("Horario ocupado\n");
+			  contadorHoras = 1;
+			  getchar();
+			}
+		      else
+			{
+			  mostrarCatalogo();
+			  printf ("Ingrese el paquete que desea agregar: ");
+			  scanf (" %d", &Cita[numCita].paquete);
+			  switch (Cita[numCita].paquete)
+			    {
+			    case 1:
+			      Cita[numCita].paquete = 80;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hviernes[Cita[numCita].hora - 1] = 1;
+			      viernes[0] = viernes[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 2:
+			      Cita[numCita].paquete = 90;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hviernes[Cita[numCita].hora - 1] = 1;
+			      viernes[0] = viernes[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 3:
+			      Cita[numCita].paquete = 99;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hviernes[Cita[numCita].hora - 1] = 1;
+			      viernes[0] = viernes[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    default:
+			      printf ("Opción no válida\n");
+			      break;
+			    }
+			}
+		      break;
+		      
+		    case 4:
+		      if (hsabado[Cita[numCita].hora - 1] == 1)
+			{
+			  printf ("Horario ocupado\n");
+			  contadorHoras = 1;
+			  getchar();
+			}
+		      else
+			{
+			  mostrarCatalogo();
+			  printf ("Ingrese el paquete que desea agregar: ");
+			  scanf (" %d", &Cita[numCita].paquete);
+			  switch (Cita[numCita].paquete)
+			    {
+			    case 1:
+			      Cita[numCita].paquete = 80;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hsabado[Cita[numCita].hora - 1] = 1;
+			      sabado[0] = sabado[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 2:
+			      Cita[numCita].paquete = 90;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hsabado[Cita[numCita].hora - 1] = 1;
+			      sabado[0] = sabado[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 3:
+			      Cita[numCita].paquete = 99;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hsabado[Cita[numCita].hora - 1] = 1;
+			      sabado[0] = sabado[0] + 1;
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    default:
+			      printf ("Opción no válida\n");
+			      break;
+			    }
+			}
+		      break;
+		      
+		    case 5:
+		      if (hdomingo[Cita[numCita].hora - 1] == 1)
+			{
+			  printf ("Horario ocupado\n");
+			  contadorHoras = 1;
+			  getchar();
+			}
+		      else
+			{
+			  mostrarCatalogo();
+			  printf ("Ingrese el paquete que desea agregar: ");
+			  scanf (" %d", &Cita[numCita].paquete);
+			  switch (Cita[numCita].paquete)
+			    {
+			    case 1:
+			      Cita[numCita].paquete = 80;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hdomingo[Cita[numCita].hora - 1] = 1;
+			      domingo[0] = domingo[0] + 1;
+			      			      
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 2:
+			      Cita[numCita].paquete = 90;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hdomingo[Cita[numCita].hora - 1] = 1;
+			      domingo[0] = domingo[0] + 1;
+			      			      
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    case 3:
+			      Cita[numCita].paquete = 99;
+			      printf ("Por $10 más, ¿desea que aspiremos su cajuela? ([1]Si [2]No): ");
+			      scanf (" %d", &Cita[numCita].cajuela);
+			      if (Cita[numCita].cajuela == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete + 10;
+				}
+			      else if (Cita[numCita].cajuela == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].paquete;
+				}
+			      
+			      if (Clientes[x].tipoAuto == 1)
+				{
+				  Cita[numCita].total = Cita[numCita].total + 10;
+				}
+			      else if (Clientes[x].tipoAuto == 2)
+				{
+				  Cita[numCita].total = Cita[numCita].total;
+				}
 
-   switch(opcion)
-     {
-     case 1:
-       precio = 80;
-       printf("\nEscogiste: Espuma activa, este paquete tiene un precio de: $%d\n\n",precio);
-       printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
-       printf("Escribe si (s) o no (n):");
-       scanf(" %c", &cajuela);
-       limpiarEntradaDatos();
-       if(cajuela == 's')
-	 {
-	   precio = precio + 10;
-	   system("clear");
-	   printf("\nTu precio estimado es de: $%d\n\n", precio);
-	 }else if(cajuela == 'n')
-	 {
-	   system("clear");
-	   printf("\nTu precio estimado es de: $%d\n\n", precio);
-	 }
-       printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
-       printf("Que tipo de vehiculo tienes?( a, b, c): ");
-       scanf(" %c", &tipoAuto);
-       limpiarEntradaDatos();
-       if(tipoAuto == 'a' || tipoAuto == 'b')
-	 {
-	   precio = precio +10;
-	   printf("\n\nTu total seria de: $%d", precio);
-	   
-	 }else if(tipoAuto == 'c')
-	 {
-	   printf("\n\nTu total es de: $%d", precio); 
-	 }
-       do
-	 {
-	   printf("\n\t1) Regresar.\n");
-	   printf("\t2) Menu Principal.\n\n");
-	   
-	   
-	   printf("Selecciona una opcion (1  -  2): ");
-	   scanf(" %hd", &opcion2);
-	   limpiarEntradaDatos();
-	   
-	 }while(opcion2 <1 || opcion2 > 2);
-       
-       switch(opcion2)
-	 {
-	 case 1:
-	   mostrarPaquetesCatalogos();
-	   break;
-	   
-	 case 2:
-	   mostrarMenuPrincipal();
-	   break;
-	   
-	 default:
-	   printf("Por favor, ingresa una opcion valida: ");
-	   mostrarPaquetesCatalogos();
-	   break;
-	 }
-       break;
+			      
+			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
+			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
+			      contadorHoras = 0;
+			      hdomingo[Cita[numCita].hora - 1] = 1;
+			      domingo[0] = domingo[0] + 1;
+			      
+			      printf ("\nAgendado\n");
+			      break;
+			      
+			    default:
+			      printf ("Opción no válida\n");
+			      break;
+			    }
+			}
+		      break;
+		      
+		    default:
+		      break;		
+		    }
+		} while (contadorHoras != 0);
+	      
+	    }
+	  else
+	    {
+	      printf ("ID inexistente (Ingresar '6969' para regresar al menú)\n");
+	      getchar();
+	    }	
+	}
+      
+    }
+  
+  return;
+}
+/**
+ *@fn Función que muestra las ganancias.
+ */
+
+void mostrarGanancias(int  numCita, struct Agendar* Cita)
+{
+  int ganancias = 0, dia, i;
+
+  system("clear");
+  printf ("\t[1] Miércoles\n\t[2] Jueves\n\t[3] Viernes\n\t[4] Sábado\n\t[5] Domingo\n");
+  printf("Dime el dia en el que quieres consultar las ganancias: ");
+  scanf(" %d", &dia);
+
+  for(i = 0; i < numCita; i++)
+    {
+      if(Cita[i].dia == dia)
+	{
+	  ganancias = ganancias + Cita[i].total;
+	}
+    }
+  printf("\nGanancias totales del dia fueron: $%d\n\n", ganancias);
+  printf("Presiona 'ENTER' para continuar.\n\n");
+  getchar();
+  
+  return;
+  
+}
+/**
+ *@fn Funcion que muestra las citas.
+ */
+
+void mostrarCitas(int  numCita, struct Agendar* Cita, int hmiercoles[5], int hjueves[5], int hviernes[5], int hsabado[5], int hdomingo[5])
+{
+  int x,i;
+  
+  system("clear");
+  printf ("\n\t[1] Miércoles\n\t[2] Jueves\n\t[3] Viernes\n\t[4] Sábado\n\t[5] Domingo\n");
+  printf("Por favor, ingrese el numero de dia que quisiera ver: ");
+  scanf(" %d", &x);
+  switch(x)
+    {
+    case 1:
+      printf("Miércoles\n\n");
+      printf("\t%d %d %d %d %d ",hmiercoles[0], hmiercoles[1], hmiercoles[2], hmiercoles[3], hmiercoles[4]);
+      printf("\n");
+      break;
 
       case 2:
-	precio = 90;
-	printf("\nEscogiste: Cera Líquida, este paquete tiene un precio de: $%d\n\n",precio);
-	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
-	printf("Escribe si (s) o no (n):");
-	scanf(" %c", &cajuela);
-	limpiarEntradaDatos();
-	if(cajuela == 's')
-	  {
-	    precio = precio + 10;
-	    system("clear");
-	    printf("\nTu precio estimado es de: $%d\n\n", precio);
-	  }else if(cajuela == 'n')
-	  {
-	    system("clear");
-	    printf("\nTu precio estimado es de: $%d\n\n", precio);
-	  }
-	printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
-	printf("Que tipo de vehiculo tienes?(a, b, c): ");
-	scanf(" %c", &tipoAuto);
-	limpiarEntradaDatos();
-	if(tipoAuto == 'a' || tipoAuto == 'b')
-	  {
-	    precio = precio +10;
-	    printf("\n\nTu total seria de: $%d", precio);
-	    
-	  }else if(tipoAuto == 'c')
-	  {
-	    printf("\n\nTu total es de: $%d", precio); 
-	  }
-	do
-	  {
-	    printf("\n\t1) Regresar.\n");
-	    printf("\t2) Menu Principal.\n\n");
-	    
-	    
-	    printf("Selecciona una opcion (1  -  2): ");
-	    scanf(" %hd", &opcion2);
-	    limpiarEntradaDatos();
-	    
-	  }while(opcion2 <1 || opcion2 > 2);
-	
-	switch(opcion2)
-	  {
-	  case 1:
-	    mostrarPaquetesCatalogos();
-	    break;
-	    
-	  case 2:
-	    mostrarMenuPrincipal();
-	    break;
-	    
-	  default:
-	    printf("Por favor, ingresa una opcion valida: ");
-	    mostrarPaquetesCatalogos();
-	    break;
-	  }
-       break;
+      printf("Jueves\n\n");
+      printf("\t%d %d %d %d %d ",hjueves[0], hjueves[1], hjueves[2], hjueves[3], hjueves[4]);
+      printf("\n");
+      break;
 
       case 3:
-	precio = 99;
-	printf("\nEscogiste: Espuma activa, este paquete tiene un precio de: $%d\n\n",precio);
-	printf("Por $10.00 mas quisieras que aspiremos tu cajuela?\n");
-	printf("Escribe si (s) o no (n):");
-	scanf(" %c", &cajuela);
-	limpiarEntradaDatos();
-	if(cajuela == 's')
-	  {
-	    precio = precio + 10;
-	    system("clear");
-	    printf("\nTu precio estimado es de: $%d\n\n", precio);
-	  }else if(cajuela == 'n')
-	  {
-	    system("clear");
-	    printf("\nTu precio estimado es de: $%d\n\n", precio);
-	  }
-
-	printf("\ta) Camioneta \tb)Pick-up \tc)Auto\n ");
-	printf("Que tipo de vehiculo tienes?(a, b, c): ");
-	scanf(" %c", &tipoAuto);
-	limpiarEntradaDatos();
-	if(tipoAuto == 'a' || tipoAuto == 'b')
-	  {
-	    precio = precio +10;
-	    printf("\n\nTu total seria de: $%d", precio);
-	    
-	  }else if(tipoAuto == 'c')
-	  {
-	    printf("\n\nTu total es de: $%d", precio); 
-	  }
-	do
-	  {
-	    printf("\n\t1) Regresar.\n");
-	    printf("\t2) Menu Principal.\n\n");
-	    
-	    
-	    printf("Selecciona una opcion (1  -  2): ");
-	    scanf(" %hd", &opcion2);
-	    limpiarEntradaDatos();
-	    
-	  }while(opcion2 <1 || opcion2 > 2);
-	
-	switch(opcion2)
-	  {
-	  case 1:
-	    mostrarPaquetesCatalogos();
-	    break;
-	    
-	  case 2:
-	    mostrarMenuPrincipal();
-	    break;
-	    
-	  default:
-	    printf("Por favor, ingresa una opcion valida: ");
-	    mostrarPaquetesCatalogos();
-	    break;
-	    
-	  }
-	
-      	break;
+      printf("Viernes\n\n");
+      printf("\t%d %d %d %d %d ",hviernes[0], hviernes[1], hviernes[2], hviernes[3], hviernes[4]);
+      printf("\n");
+      break;
 
       case 4:
-	mostrarMenuPrincipal();
-	break;
+      printf("Sábado\n\n");
+      printf("\t%d %d %d %d %d ",hsabado[0], hsabado[1], hsabado[2], hsabado[3], hsabado[4]);
+      printf("\n");
+      break;
 
-     default:
-       printf("\nOpcion invalida, Por favor intenta de nuevo. ");
-       mostrarPaquetesCatalogos();
-       break;
-     }
-   
-   return precio;
+      case 5:
+      printf("Domingo\n\n");
+      printf("\t%d %d %d %d %d",hdomingo[0], hdomingo[1], hdomingo[2], hdomingo[3], hdomingo[4]);
+      printf("\n");
+      break;
+    }
+  printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+  printf("Si en la posicion del horario se encuentra un 1, significa que ya esta ocupado, si se encuentra un 0 significa que esta libre.\n");
+  return;
 }
