@@ -66,6 +66,7 @@ int main(void)
   printf ("\n\n\t\t\t---->Autolavado 'SuperWash'<----\n\n");
   printf ("\tFundadores: José Pablo Montero, Ricardo López, Thalía Bravo\n");
   printf ("\t Abierto de Miércoles a Domingo, de 10:00 hrs a 15:00 hrs\n\n");
+  printf("\tPresiona 'ENTER' para empezar!.");
   getchar();
   
   do 
@@ -152,10 +153,12 @@ int main(void)
 	    {
 	    case 1:
 	      mostrarGanancias(numCita, Cita);
+	      getchar();
 	      break;
 	      
 	    case 2:
 	      mostrarCitas(numCita, Cita, hmiercoles, hjueves, hviernes, hsabado, hdomingo);
+	      getchar();
 	      break;
 	      
 	    case 3:
@@ -194,7 +197,7 @@ void mostrarPrincipal(void)
 {
   system("clear");
   printf ("Menú principal\n\n");
-  printf ("\t[1] Mostrar Catálogo\n\n\t\t[A] Paquetes para lavado de autos\n\t\t[B] Regresar al menú principal\n\n\n");
+  printf ("\t[1] Mostrar Catálogo\n\n\t\t[A] Paquetes para lavado de autos\n\n\n");
   printf ("\t[2] Registro de Clientes\n\n\t\t[A] Agregar cliente\n\t\t[B] Mostrar Cliente\n\t\t[C] Modificar datos de un cliente\n\t\t[D] Eliminar cliente\n\t\t[E] Regresar al menú principal\n\n\n");
   printf ("\t[3] Agendar Cita\n\n\t\t[A] Agendar una cita\n\t\t[B] Regresar al menú principal\n\n\n");
   printf ("\t[4] Reportes\n\n\t\t[A] Ganancias\n\t\t[B] Citas\n\t\t[C] Programa de lealtad\n\t\t[D] Regresar al menú principal\n\n\n");
@@ -229,7 +232,7 @@ void mostrarMenuRegistroClientes(void)
   system("clear");
   printf ("Registro de clientes\n\n");
   printf ("\t[1] Agregar cliente\n\n");
-  printf ("\t[2] Mostrar clientes(ID necesario)\n\n");
+  printf ("\t[2] Mostrar clientes\n\n");
   printf ("\t[3] Editar cliente(ID necesario)\n\n");
   printf ("\t[4] Eliminar cliente(ID necesario)\n\n");
   printf ("\t[5] Regresar al menú principal\n\n");
@@ -545,7 +548,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				}
 			      
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -577,7 +580,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				}
 			      
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -608,7 +611,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el miércoles en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -661,7 +664,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -692,7 +695,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -723,7 +726,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el jueves en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -775,7 +778,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -806,7 +809,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -837,7 +840,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el viernes en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -889,7 +892,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -920,7 +923,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -951,7 +954,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -1003,7 +1006,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -1035,7 +1038,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				  Cita[numCita].total = Cita[numCita].total;
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -1069,7 +1072,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 
 			      
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
-			      printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
+			      printf ("\t\n\n[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
 			      printf("\t%s, agendó cita para el domingo en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
@@ -1092,14 +1095,15 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 		} while (contadorHoras != 0);
 	      
 	    }
-	  else
+	   if(x != Clientes[i].ID)
 	    {
 	      printf ("ID inexistente (Ingresar '6969' para regresar al menú)\n");
-	      getchar();
 	    }	
 	}
       
     }
+  printf("Presiona 'ENTER' para continuar.");
+  getchar();
   
   return;
 }
@@ -1125,6 +1129,7 @@ void mostrarGanancias(int  numCita, struct Agendar* Cita)
     }
   printf("\nGanancias totales del dia fueron: $%d\n\n", ganancias);
   printf("Presiona 'ENTER' para continuar.\n\n");
+  
   getchar();
   
   return;
@@ -1146,35 +1151,37 @@ void mostrarCitas(int  numCita, struct Agendar* Cita, int hmiercoles[5], int hju
     {
     case 1:
       printf("Miércoles\n\n");
-      printf("\t%d %d %d %d %d ",hmiercoles[0], hmiercoles[1], hmiercoles[2], hmiercoles[3], hmiercoles[4]);
+      printf ("\t[%d] 10:00 - 11:00 hrs\n\t[%d] 11:00 - 12:00 hrs\n\t[%d] 12:00 - 13:00 hrs\n\t[%d] 13:00 - 14:00 hrs\n\t[%d] 14:00 - 15:00 hrs\n", hmiercoles[0], hmiercoles[1], hmiercoles[2], hmiercoles[3], hmiercoles[4]);
       printf("\n");
       break;
 
       case 2:
       printf("Jueves\n\n");
-      printf("\t%d %d %d %d %d ",hjueves[0], hjueves[1], hjueves[2], hjueves[3], hjueves[4]);
+      printf ("\t[%d] 10:00 - 11:00 hrs\n\t[%d] 11:00 - 12:00 hrs\n\t[%d] 12:00 - 13:00 hrs\n\t[%d] 13:00 - 14:00 hrs\n\t[%d] 14:00 - 15:00 hrs\n", hjueves[0], hjueves[1], hjueves[2], hjueves[3], hjueves[4]);
       printf("\n");
       break;
 
       case 3:
       printf("Viernes\n\n");
-      printf("\t%d %d %d %d %d ",hviernes[0], hviernes[1], hviernes[2], hviernes[3], hviernes[4]);
+      printf ("\t[%d] 10:00 - 11:00 hrs\n\t[%d] 11:00 - 12:00 hrs\n\t[%d] 12:00 - 13:00 hrs\n\t[%d] 13:00 - 14:00 hrs\n\t[%d] 14:00 - 15:00 hrs\n", hviernes[0], hviernes[1], hviernes[2], hviernes[3], hviernes[4]);
       printf("\n");
       break;
 
       case 4:
       printf("Sábado\n\n");
-      printf("\t%d %d %d %d %d ",hsabado[0], hsabado[1], hsabado[2], hsabado[3], hsabado[4]);
+      printf ("\t[%d] 10:00 - 11:00 hrs\n\t[%d] 11:00 - 12:00 hrs\n\t[%d] 12:00 - 13:00 hrs\n\t[%d] 13:00 - 14:00 hrs\n\t[%d] 14:00 - 15:00 hrs\n", hsabado[0], hsabado[1], hsabado[2], hsabado[3], hsabado[4]);
       printf("\n");
       break;
 
       case 5:
       printf("Domingo\n\n");
-      printf("\t%d %d %d %d %d",hdomingo[0], hdomingo[1], hdomingo[2], hdomingo[3], hdomingo[4]);
+      printf ("\t[%d] 10:00 - 11:00 hrs\n\t[%d] 11:00 - 12:00 hrs\n\t[%d] 12:00 - 13:00 hrs\n\t[%d] 13:00 - 14:00 hrs\n\t[%d] 14:00 - 15:00 hrs\n", hdomingo[0], hdomingo[1], hdomingo[2], hdomingo[3], hdomingo[4]);
       printf("\n");
       break;
     }
-  printf ("\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
   printf("Si en la posicion del horario se encuentra un 1, significa que ya esta ocupado, si se encuentra un 0 significa que esta libre.\n");
+  printf("\nPresiona la tecla 'ENTER' para continuar.");
+
+  getchar();
   return;
 }
