@@ -46,6 +46,7 @@ void eliminarCliente(int numClientes, struct Datos* Clientes);
 void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Datos* Clientes, int miercoles[1], int hmiercoles[5], int jueves[1], int hjueves[5], int viernes[1], int hviernes[5], int sabado[1], int hsabado[5], int domingo[1], int hdomingo[5]);
 void mostrarGanancias(int  numCita, struct Agendar* Cita);
 void mostrarCitas(int numCita, struct Agendar* Cita, int hmiercoles[5], int hjueves[5], int hviernes[5], int hsabado[5], int hdomingo[5];);
+void mostrarProgramaLealtad(int numClientes,struct Datos* Clientes);
 
 /**
  * @fn  Funcion del programa Principal.
@@ -162,7 +163,7 @@ int main(void)
 	      break;
 	      
 	    case 3:
-	      //mostrarProgramaLealtad();
+	      mostrarProgramaLealtad(numClientes, Clientes);
 	      break;
 	      
 	    case 4:
@@ -1184,5 +1185,48 @@ void mostrarCitas(int  numCita, struct Agendar* Cita, int hmiercoles[5], int hju
   printf("\nPresiona la tecla 'ENTER' para continuar.");
 
   getchar();
+  return;
+}
+
+/**
+ *@fn Funcion que muestra el programa de lealtad.
+ */
+
+void mostrarProgramaLealtad(int numClientes, struct Datos* Clientes)
+{
+  int x, opcion;
+  
+  for(x = 0; x < numClientes; x++)
+    {
+      printf("\tEl numero de cliente: %d,\n\tTiene: %d Puntos de lealtad\n",Clientes[x].ID, Clientes[x].numeroServicios);
+      if(Clientes[x].numeroServicios >= 5)
+	{
+	  printf("\tTiene cupones disponibles!!\n\n");
+	  printf("Desea gastar los cupones del cliente? ([1]Si! [2]No): ");
+	  scanf(" %d", &opcion);
+	  switch(opcion)
+	    {
+	    case 1:
+	      printf("\tCupón válido por un lavado gratis en cualquiera de nuestros paquetes!!!!\n");
+	      printf("\tPresente su cupón en caja. (UwU)\n");
+	      Clientes[x].numeroServicios = Clientes[x].numeroServicios - 5;
+	      break;
+
+	    case 2:
+	      break;
+
+	    default:
+	      printf("Opción inválida, por favor, intente de nuevo.\n");
+	      break;
+	      
+	    }
+	}
+      else
+	{
+	  printf("\tAún no tienes cupones disponibles (UnU)\n\n");
+	}
+    }
+  
+  
   return;
 }
