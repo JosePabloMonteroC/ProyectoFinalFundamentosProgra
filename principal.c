@@ -90,18 +90,22 @@ int main(void)
 	    case 1:
 	      registrarClientes(numClientes, Clientes);
 	      numClientes = numClientes + 1;
+	      getchar();
 	      break;
 	      
 	    case 2:
 	      mostrarCliente(numClientes, Clientes);
+	      getchar();
 	      break;
 	      
 	    case 3:
 	      editarCliente(numClientes, Clientes);
+	      getchar();
 	      break;
 	      
 	    case 4:
 	      eliminarCliente(numClientes, Clientes);
+	      getchar();
 	      break;
 	      
 	    case 5:
@@ -178,7 +182,7 @@ int main(void)
 	}
     } while (opcionGeneral != 0);
   
-  printf ("¡Gracias por venir!\n");
+  printf ("\n¡Gracias por venir!\n");
   
   return 0;
 }
@@ -225,9 +229,9 @@ void mostrarMenuRegistroClientes(void)
   system("clear");
   printf ("Registro de clientes\n\n");
   printf ("\t[1] Agregar cliente\n\n");
-  printf ("\t[2] Mostrar clientes\n\n");
-  printf ("\t[3] Editar cliente\n\n");
-  printf ("\t[4] Eliminar cliente\n\n");
+  printf ("\t[2] Mostrar clientes(ID necesario)\n\n");
+  printf ("\t[3] Editar cliente(ID necesario)\n\n");
+  printf ("\t[4] Eliminar cliente(ID necesario)\n\n");
   printf ("\t[5] Regresar al menú principal\n\n");
   
   return;
@@ -255,7 +259,7 @@ void registrarClientes(int numClientes, struct Datos* Clientes)
 {
   system("clear");
   printf("\nDame los datos del cliente #%d:\n", numClientes);
-  printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
+  printf("\tIngrese el nombre del cliente usando el siguiente formato (ejemplo: Jose_Pablo_Montero): ");
   scanf(" %s", Clientes[numClientes].nombre);
   printf("\tIngresa la marca del vehiculo: ");
   fflush(stdin);
@@ -277,6 +281,9 @@ void registrarClientes(int numClientes, struct Datos* Clientes)
   scanf(" %d", &Clientes[numClientes].numeroServicios);
   
   Clientes[numClientes].ID = numClientes;
+  printf("\t\n\nDatos del cliente: %s\n\tID del cliente: %d\n\tMarca del vehiculo: %s\n\tModelo: %s\n\tColor: %s\n\tPlacas: %s\n\tNumero de servicios: %d\n\n",Clientes[numClientes].nombre,Clientes[numClientes].ID, Clientes[numClientes].marca, Clientes[numClientes].modelo, Clientes[numClientes].color, Clientes[numClientes].placas, Clientes[numClientes].numeroServicios);
+  printf("Cliente registrado! Presiona 'ENTER' para continuar.");
+
   getchar();
   
   return;
@@ -291,15 +298,21 @@ void mostrarCliente(int numClientes, struct Datos* Clientes)
   int x;
   
   system("clear");
-  printf("\nIngresa el ID del cliente:\n\n");
-  scanf (" %d", &x);
-  printf("\tNombre del cliente: %s\n", Clientes[x].nombre);
-  printf("\tMarca del vehiculo: %s\n", Clientes[x].marca);
-  printf("\tModelo del vehiculo: %s\n", Clientes[x].modelo);
-  printf("\tColor del vehiculo: %s\n", Clientes[x].color);
-  printf("\tPlacas del vehiculo: %s\n", Clientes[x].placas);
-  printf("\tTipo de vehiculo: %d\n", Clientes[x].tipoAuto);
-  printf("\tNúmero de servicios que lleva el cliente: %d\n\n", Clientes[x].numeroServicios);
+  printf("\n");
+  
+   for(x = 0; x < numClientes; x++)
+    {
+      printf("\tNombre del cliente: %s\n", Clientes[x].nombre);
+      printf("\tID del cliente: %d\n", Clientes[x].ID);
+      printf("\tMarca del vehiculo: %s\n", Clientes[x].marca);
+      printf("\tModelo del vehiculo: %s\n", Clientes[x].modelo);
+      printf("\tColor del vehiculo: %s\n", Clientes[x].color);
+      printf("\tPlacas del vehiculo: %s\n", Clientes[x].placas);
+      printf("\tTipo de vehiculo([1]camioneta o pick-up [2]Auto): %d\n", Clientes[x].tipoAuto);
+      printf("\tNúmero de servicios que lleva el cliente: %d\n\n", Clientes[x].numeroServicios);
+    }
+  
+  printf("\n\nPresiona 'ENTER' para continuar");
   
   getchar();
   
@@ -318,7 +331,7 @@ void editarCliente(int numClientes, struct Datos* Clientes)
   scanf (" %d", &x);
   
   printf("\nDame los datos del cliente #%d:\n", x);
-  printf("\tIngrese el nombre del cliente(SOLO 1 NOMBRE Y 1 APELLIDO): ");
+  printf("\tIngrese el nombre del cliente con el siguiente formato(ejemplo: Jose_Pablo_Montero): ");
   scanf(" %s", Clientes[x].nombre);
   printf("\tIngresa la marca del vehiculo: ");
   fflush(stdin);
@@ -332,12 +345,17 @@ void editarCliente(int numClientes, struct Datos* Clientes)
   printf("\tIngresa las placas del vehiculo: ");
   fflush(stdin);
   scanf(" %s", Clientes[x].placas);
-  printf("\tIngresa el tipo de vehiculo. ([1] Camioneta [2] Pick-up [3]Auto): ");
+  printf("\tIngresa el tipo de vehiculo. ([1] Camioneta o Pick-up [2]Auto): ");
   fflush(stdin);
   scanf(" %d", &Clientes[x].tipoAuto);
   printf("\tIngresa el número de servicios que lleva el cliente: ");
   fflush(stdin);
   scanf(" %d", &Clientes[x].numeroServicios);
+
+  printf("\n\nDatos actualizados!\n\n");
+  printf("\tCliente: %s\n\tMarca: %s\n\tModelo: %s\n\tColor: %s\n\tPlacas: %s\n\tTipo Auto ([1]camioneta o pick-up [2]Auto): %d\n\tNumero de servicios: %d\n\n",Clientes[x].nombre, Clientes[x].marca, Clientes[x].modelo, Clientes[x].color, Clientes[x].placas, Clientes[x].tipoAuto, Clientes[x].numeroServicios);
+
+  printf("Presiona 'ENTER' para continuar");
   
   getchar();
   
@@ -370,6 +388,7 @@ void eliminarCliente(int numClientes, struct Datos* Clientes)
 	  break;
 	}
     }
+  printf("Presiona 'ENTER' para continuar");
   
   getchar();
   
@@ -377,7 +396,7 @@ void eliminarCliente(int numClientes, struct Datos* Clientes)
 }
 
 /**
- *@fn Función que eliminar a los clientes.
+ *@fn Función para agendar citas.
  */
 void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Datos* Clientes, int miercoles[1], int hmiercoles[5], int jueves[1], int hjueves[5], int viernes[1], int hviernes[5], int sabado[1], int hsabado[5], int domingo[1], int hdomingo[5])
 {	
