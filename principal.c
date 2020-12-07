@@ -185,7 +185,7 @@ int main(void)
 	}
     } while (opcionGeneral != 0);
   
-  printf ("\n¡Gracias por venir!\n");
+  printf ("\n¡Gracias por venir!\n\n\n");
   
   return 0;
 }
