@@ -62,7 +62,7 @@ int main(void)
   int opcionMenu, opcionClientes, opcionReportes, opcionGeneral = 1, numClientes = 0, numCita = 0, opcionCita;
   
   system("clear");
-  mostrarInstrucciones("Jose Pablo Montero, Thalía Bravo y Ricardo López","Sistema del autolavado 'SuperWash'.");
+  mostrarInstrucciones("José Pablo Montero, Thalía Bravo y Ricardo López","Sistema del autolavado 'SuperWash'.");
   
   printf ("\n\n\t\t\t---->Autolavado 'SuperWash'<----\n\n");
   printf ("\tFundadores: José Pablo Montero, Ricardo López, Thalía Bravo\n");
@@ -308,11 +308,11 @@ void mostrarCliente(int numClientes, struct Datos* Clientes)
     {
       printf("\tNombre del cliente: %s\n", Clientes[x].nombre);
       printf("\tID del cliente: %d\n", Clientes[x].ID);
-      printf("\tMarca del vehiculo: %s\n", Clientes[x].marca);
-      printf("\tModelo del vehiculo: %s\n", Clientes[x].modelo);
-      printf("\tColor del vehiculo: %s\n", Clientes[x].color);
-      printf("\tPlacas del vehiculo: %s\n", Clientes[x].placas);
-      printf("\tTipo de vehiculo([1]camioneta o pick-up [2]Auto): %d\n", Clientes[x].tipoAuto);
+      printf("\tMarca del vehículo: %s\n", Clientes[x].marca);
+      printf("\tModelo del vehículo: %s\n", Clientes[x].modelo);
+      printf("\tColor del vehículo: %s\n", Clientes[x].color);
+      printf("\tPlacas del vehículo: %s\n", Clientes[x].placas);
+      printf("\tTipo de vehículo([1]camioneta o pick-up [2]Auto): %d\n", Clientes[x].tipoAuto);
       printf("\tNúmero de servicios que lleva el cliente: %d\n\n", Clientes[x].numeroServicios);
     }
   
@@ -337,19 +337,19 @@ void editarCliente(int numClientes, struct Datos* Clientes)
   printf("\nDame los datos del cliente #%d:\n", x);
   printf("\tIngrese el nombre del cliente con el siguiente formato(ejemplo: Jose_Pablo_Montero): ");
   scanf(" %s", Clientes[x].nombre);
-  printf("\tIngresa la marca del vehiculo: ");
+  printf("\tIngresa la marca del vehículo: ");
   fflush(stdin);
   scanf(" %s", Clientes[x].marca);
-  printf("\tIngresa el modelo del vehiculo: ");
+  printf("\tIngresa el modelo del vehículo: ");
   fflush(stdin);
   scanf(" %s", Clientes[x].modelo);
-  printf("\tIngresa el color del vehiculo: ");
+  printf("\tIngresa el color del vehículo: ");
   fflush(stdin);
   scanf(" %s", Clientes[x].color);
-  printf("\tIngresa las placas del vehiculo: ");
+  printf("\tIngresa las placas del vehículo: ");
   fflush(stdin);
   scanf(" %s", Clientes[x].placas);
-  printf("\tIngresa el tipo de vehiculo. ([1] Camioneta o Pick-up [2]Auto): ");
+  printf("\tIngresa el tipo de vehículo. ([1] Camioneta o Pick-up [2]Auto): ");
   fflush(stdin);
   scanf(" %d", &Clientes[x].tipoAuto);
   printf("\tIngresa el número de servicios que lleva el cliente: ");
@@ -357,7 +357,7 @@ void editarCliente(int numClientes, struct Datos* Clientes)
   scanf(" %d", &Clientes[x].numeroServicios);
 
   printf("\n\nDatos actualizados!\n\n");
-  printf("\tCliente: %s\n\tMarca: %s\n\tModelo: %s\n\tColor: %s\n\tPlacas: %s\n\tTipo Auto ([1]camioneta o pick-up [2]Auto): %d\n\tNumero de servicios: %d\n\n",Clientes[x].nombre, Clientes[x].marca, Clientes[x].modelo, Clientes[x].color, Clientes[x].placas, Clientes[x].tipoAuto, Clientes[x].numeroServicios);
+  printf("\tCliente: %s\n\tMarca: %s\n\tModelo: %s\n\tColor: %s\n\tPlacas: %s\n\tTipo Auto ([1]camioneta o pick-up [2]Auto): %d\n\tNúmero de servicios: %d\n\n",Clientes[x].nombre, Clientes[x].marca, Clientes[x].modelo, Clientes[x].color, Clientes[x].placas, Clientes[x].tipoAuto, Clientes[x].numeroServicios);
 
   printf("Presiona 'ENTER' para continuar");
   
@@ -894,7 +894,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
 			      printf ("\n\n\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
-			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\t%s, agendó cita para el sábado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
 			      hsabado[Cita[numCita].hora - 1] = 1;
@@ -925,7 +925,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
 			      printf ("\n\n\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
-			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\t%s, agendó cita para el sábado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
 			      hsabado[Cita[numCita].hora - 1] = 1;
@@ -956,7 +956,7 @@ void agendarCitas(int numCita, int numClientes, struct Agendar* Cita, struct Dat
 				}
 			      Clientes[x].numeroServicios = Clientes[x].numeroServicios + 1;
 			      printf ("\n\n\t[1] 10:00 - 11:00 hrs\n\t[2] 11:00 - 12:00 hrs\n\t[3] 12:00 - 13:00 hrs\n\t[4] 13:00 - 14:00 hrs\n\t[5] 14:00 - 15:00 hrs\n");
-			      printf("\t%s, agendó cita para el sabado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
+			      printf("\t%s, agendó cita para el sábado en el horario #%d con un costo total de: $%d\n",Clientes[x].nombre, Cita[numCita].hora, Cita[numCita].total);
 			      printf("\tTienes %d puntos de lealtad.\n", Clientes[x].numeroServicios);
 			      contadorHoras = 0;
 			      hsabado[Cita[numCita].hora - 1] = 1;
@@ -1118,7 +1118,7 @@ void mostrarGanancias(int  numCita, struct Agendar* Cita)
 
   system("clear");
   printf ("\n\t[1] Miércoles\n\t[2] Jueves\n\t[3] Viernes\n\t[4] Sábado\n\t[5] Domingo\n\n");
-  printf("Dime el número de dia en el que quieres consultar las ganancias: ");
+  printf("Dime el número de día en el que quieres consultar las ganancias: ");
   scanf(" %d", &dia);
 
   for(i = 0; i < numCita; i++)
@@ -1128,7 +1128,7 @@ void mostrarGanancias(int  numCita, struct Agendar* Cita)
 	  ganancias = ganancias + Cita[i].total;
 	}
     }
-  printf("\nLas ganancias totales del dia fueron: $%d\n\n", ganancias);
+  printf("\nLas ganancias totales del día fueron: $%d\n\n", ganancias);
   printf("************************************************************\n");
   printf("Presiona 'ENTER' para continuar.\n\n");
   
@@ -1198,7 +1198,7 @@ void mostrarProgramaLealtad(int numClientes, struct Datos* Clientes)
   
   for(x = 0; x < numClientes; x++)
     {
-      printf("\tEl numero de cliente: %d,\n\tTiene: %d Puntos de lealtad\n",Clientes[x].ID, Clientes[x].numeroServicios);
+      printf("\tEl número de cliente: %d,\n\tTiene: %d Puntos de lealtad\n",Clientes[x].ID, Clientes[x].numeroServicios);
       if(Clientes[x].numeroServicios >= 5)
 	{
 	  printf("\tTiene cupones disponibles!!\n\n");
