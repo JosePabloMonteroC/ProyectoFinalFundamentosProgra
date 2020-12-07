@@ -164,6 +164,7 @@ int main(void)
 	      
 	    case 3:
 	      mostrarProgramaLealtad(numClientes, Clientes);
+	      getchar();
 	      break;
 	      
 	    case 4:
@@ -1210,6 +1211,10 @@ void mostrarProgramaLealtad(int numClientes, struct Datos* Clientes)
 	      printf("\tCupón válido por un lavado gratis en cualquiera de nuestros paquetes!!!!\n");
 	      printf("\tPresente su cupón en caja. (UwU)\n");
 	      Clientes[x].numeroServicios = Clientes[x].numeroServicios - 5;
+
+	      printf("Presiona 'ENTER' para continuar.");
+
+	      getchar();
 	      break;
 
 	    case 2:
@@ -1224,9 +1229,11 @@ void mostrarProgramaLealtad(int numClientes, struct Datos* Clientes)
       else
 	{
 	  printf("\tAún no tienes cupones disponibles (UnU)\n\n");
+	  printf("Presiona 'ENTER' para continuar");
+	  
+	  getchar();
 	}
     }
-  
   
   return;
 }
